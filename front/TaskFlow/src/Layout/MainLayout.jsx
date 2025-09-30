@@ -1,39 +1,30 @@
-// src/App.jsx
 import React from "react";
-import { Layout, Menu, theme } from "antd";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
-
+import { Layout, theme } from "antd";
 import HeaderBar from "./HeaderBar";
 import MyContent from "./MyContent";
 import SideBar from "./SideBar";
-
-const { Header, Sider, Content } = Layout;
-
+import { Outlet, Link } from 'react-router-dom';
 
 
-
-    const MainLayout = () => {
-          const {
+const MainLayout = () => {
+    const {
     token: { colorBgContainer },
-  } = theme.useToken();
+    } = theme.useToken();
 
-        return (
-                <Layout style={{ minHeight: "100vh" }}>
-                  
-                <HeaderBar/>
-                <Layout >
+    return (
+        <Layout style={{ minHeight: "100vh" }}>
+            <HeaderBar/>
+            <Layout >
                 <SideBar />
                 <Layout style={{ padding: "24px" }} >
-                <MyContent />
+                    <MyContent>
+                     <Outlet />
+                    </MyContent>
                 </Layout>
-                </Layout>
-                </Layout>
+            </Layout>
+        </Layout>
 
         )
     }
 
-    export default MainLayout;
+export default MainLayout;

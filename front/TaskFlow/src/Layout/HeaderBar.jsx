@@ -1,12 +1,7 @@
-import React from "react";
 import { Layout, Menu, theme } from "antd";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
-const { Header, Sider, Content } = Layout;
+const { Header} = Layout;
 
 const HeaderBar = () => {
   const {
@@ -15,30 +10,29 @@ const HeaderBar = () => {
 
 
 return (
-
-  
+  <Header style={{ display: "flex", alignItems: "center" }}>
+    <Link to="/home">
+    <div style={{ color: "white", fontWeight: "bold", marginRight: 20 }}>
+      <img src="../../public/logoTask.png" alt="go home" width={36} />
+      TaskFlow
+    </div>
+    </Link>
+    
+    <Menu
+      style={{ lineHeight: "36px" }}
+      theme="dark"
+      mode="horizontal"
+      defaultSelectedKeys={["1"]}
+      items={[
       
-       <Header style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ color: "white", fontWeight: "bold", marginRight: 20 }}>
-            TaskFlow
-          </div>
-          <Menu
-           style={{ lineHeight: "36px" }}
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["1"]}
-            items={[
-              { key: "1", label: "Dashboard" },
-              { key: "2", label: "Tasks" },
-              { key: "3", label: "Settings" },
+        { key: "1", label: <Link to="/dashboard">Dashboard</Link>  },
+        { key: "2", label: <Link to="/tasks">Tasks</Link> },
+        { key: "3", label: <Link to="/settings">Settings</Link> },
             ]}
-          />
-        </Header>
-      
-     
+    />
+  </Header>
+  
 )
-
-
 }
 
 export default HeaderBar;

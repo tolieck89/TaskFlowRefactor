@@ -1,31 +1,22 @@
-import React from "react";
-import { Layout, Menu, theme } from "antd";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
+import { Layout, theme } from "antd";
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 
-
-const MyContent = () => {
+const MyContent = ({children}) => {
     const {
       token: { colorBgContainer },
     } = theme.useToken();
   
     return(
-       
-          <Content
-            style={{
-              padding: 24,
-              // margin: 4,
-              background: colorBgContainer,
-              minHeight: 280,
-            }}
-          >
-            Тут буде мій SPA контент
-          </Content>
+      <Content
+        style={{
+        padding: 24,
+        background: colorBgContainer,
+        minHeight: 280,
+              }}
+      >
+            {children}
+      </Content>
     )
 }
 

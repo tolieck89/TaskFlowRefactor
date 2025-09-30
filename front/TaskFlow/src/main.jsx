@@ -1,9 +1,10 @@
-// src/main.jsx
-import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import { ConfigProvider, theme } from "antd";
-import "antd/dist/reset.css"; // важливо для нормального ресету стилів
+import { ConfigProvider, theme, Spin } from "antd";
+import "antd/dist/reset.css"; 
+import { RouterProvider } from "react-router-dom";
+import router  from "./Routers/routes/Routes";
+
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 
@@ -11,11 +12,17 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       theme={{
         algorithm: theme.darkAlgorithm, // або lightAlgorithm
         token: {
-          colorPrimary: "#1677ff", // твій бренд-колір
+          colorPrimary: "#1677ff", 
         },
       }}
     >
-      <App />
+        <RouterProvider
+         router={router} 
+          fallbackElement={
+    <div style={{ display: "flex", justifyContent: "center", marginTop: 50 }}>
+      <Spin size="large" />
+    </div>}
+        />
     </ConfigProvider>
   
 );
