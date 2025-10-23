@@ -23,9 +23,10 @@ const SideBar = () => {
         defaultSelectedKeys={["1"]}
         style={{ height: "100%", borderRight: 0}}
         items={[
-          { key: "1", icon: <UserOutlined />, label: <Link to="/users">Users</Link> },
-          { key: "2", icon: <LaptopOutlined />, label: <Link to="/projects">Projects</Link> },
-          { key: "3", icon: <NotificationOutlined />, label: <Link to="/notifications">Notifications</Link> },
+          { key: "1", icon: <UserOutlined />, label: <Link to="/user-profile">My profile</Link> },
+          { key: "2", icon: <UserOutlined />, label: <Link to="/users">Users</Link> },
+          { key: "3", icon: <LaptopOutlined />, label: <Link to="/projects">Projects</Link> },
+          { key: "4", icon: <NotificationOutlined />, label: <Link to="/notifications">Notifications</Link> },
                 ]}
       />
     </Sider>

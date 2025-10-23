@@ -1,48 +1,106 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../../Layout/MainLayout";
-import Dashboards from "../../Pages/Dashboards/Dashboards";
 import Projects from "../../Pages/Projects/Projects";
-import Settings from "../../Pages/Settings/Settings";
 import Users from "../../Pages/Users/Users";
 import Tasks from "../../Pages/Tasks/Tasks";
 import Notifications from "../../Pages/Notiifcations/Notifications";
 import Home from "../../Pages/Home";
+import AuthPage from "../../Pages/Auth/AuthPage";
+import Profile from "../../Pages/Profile/Profile";
+import ProjectDashboard from "../../Pages/Projects/ProjectDashboard";
+import ProjectTasks from "../../Pages/Tasks/ProjectTasks";
+import ProtectedRoute from "./ProtectedRoute";
+import ProjectSettings from "../../Pages/Projects/ProjectSettings";
+import TaskDetails from "../../Pages/Tasks/TaskDetails";
+import TaskSettings from "../../Pages/Tasks/TaskSettings";
+import ProfileSettings from "../../Pages/Profile/ProfileSettings";
+import MyAssignedTasks from "../../Pages/Tasks/MyAssignedTasks";
 
- const router = createBrowserRouter([
+
+const router = createBrowserRouter([
   {
-    path: "/",
-    element: <MainLayout />,  
+    path: '/',
+    element: <MainLayout />,
     children: [
+      { path: 'login', element: <AuthPage /> },
+      { path: 'home', element: <Home /> },
+
       {
-        path: "dashboard",
-        element: <Dashboards />
-      },
+  path: 'projects',
+  children: [
+    { index: true, element: <Projects /> }, // /projects
+    {
+      path: ':projectId',
+      children: [
+        { index: true, element: <ProjectDashboard /> }, // /projects/:projectId
+        { path: 'dashboard', element: <ProjectDashboard /> }, // /projects/:projectId/dashboard
+        { path: 'tasks', element: <ProjectTasks /> },
+        {
+          path: 'settings',
+          element: (
+            <ProtectedRoute minRole={2}>
+              <ProjectSettings />
+            </ProtectedRoute>
+          ),
+        },
+      ],
+    },
+  ],
+},
+
+
       {
-        path: "projects",
-        element: <Projects />
+        path: 'tasks',
+        children: [
+          { index: true, element: <Tasks /> },
+          {
+            path: ':taskId',
+            children: [
+              { path: 'details', element: <TaskDetails /> },
+              {
+                path: 'settings',
+                element: (
+                  <ProtectedRoute minRole={2}>
+                    <TaskSettings />
+                  </ProtectedRoute>
+                ),
+              },
+            ],
+          },
+        ],
       },
+
       {
-        path: "settings",
-        element: <Settings />
+        path: 'user-profile',
+        children: [
+          { index: true, element: <Profile /> },
+          { path: 'tasks', element: <MyAssignedTasks /> },
+          {
+            path: 'settings',
+            element: (
+              <ProtectedRoute minRole={1}>
+                <ProfileSettings />
+              </ProtectedRoute>
+            ),
+          },
+        ],
       },
+
       {
-        path: "users",
-        element: <Users />
+        path: 'users',
+        element: (
+          <ProtectedRoute minRole={2}>
+            <Users />
+          </ProtectedRoute>
+        ),
       },
+
       {
-        path: "tasks",
-        element: <Tasks />
+        path: 'notifications',
+        element: <Notifications />,
       },
-      {
-        path: "notifications",
-        element: <Notifications />
-      },
-      {
-        path: "home",
-        element: <Home />
-      },
-    ]
-  }
+    ],
+  },
 ]);
 
 export default router;

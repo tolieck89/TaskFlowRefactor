@@ -7,13 +7,18 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve:api": "json-server --watch db.json --port 3001"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.9.0",
     "antd": "^5.27.4",
+    "dayjs": "^1.11.18",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.3"
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.9.3",
+    "redux-thunk": "^3.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",

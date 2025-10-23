@@ -1,0 +1,18 @@
+services:
+  api:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    volumes:
+      - ./back/data.json:/data.json
+    ports:
+      - "3001:3001"
+
+  frontend:
+    build:
+      context: ./front/TaskFlow
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
