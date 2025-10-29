@@ -2,6 +2,7 @@ import React from 'react'
 import { Layout, Menu, theme, Button, Space, Table, Tag } from "antd"; 
 import { useUserModal } from '../../app/hooks/useUserModal';
 import { useSelector } from 'react-redux';
+import ActionsBlock from '../../Components/Actions';
 
 
 const Projects = () => {
@@ -37,7 +38,7 @@ const Projects = () => {
     key: 'description',
   },
   {
-    title: 'Tags',
+    title: 'Issue types',
     key: 'issuetype',
     dataIndex: 'issuetype',
     render: (_, { issuetype }) => (
@@ -55,16 +56,20 @@ const Projects = () => {
     ),
   },
   {
-    title: 'Action',
-    key: 'action',
+    title: 'Actions',
+    key: 'actions',
     render: (_, record) => (
-      <Space size="middle">
-        <a>Details</a>
-        <a>Edit</a>
-        <a>Delete</a>
-      </Space>
+      <ActionsBlock
+        item={record}
+        onView={(item) => console.log('View project', item)}
+        onEdit={(item) => console.log('Edit project', item)}
+        onDelete={(item) => console.log('Delete project', item)}
+        onCopy={(item) => console.log('Copy project', item)}
+        onLock={(item) => console.log('Lock project', item)}
+      />
     ),
   },
+
 ];
 
 

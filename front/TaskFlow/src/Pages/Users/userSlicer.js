@@ -10,7 +10,10 @@ const userSlice = createSlice({
     const newUser = action.payload;
     newUser.role = 0;
     newUser.group = [];
+    newUser.allowedProjects = [];
     newUser.id= state.length;
+    newUser.isLocked= false;
+    newUser.regdate = new Date();
      state.push(newUser);
       localStorage.setItem('users', JSON.stringify(state));
 

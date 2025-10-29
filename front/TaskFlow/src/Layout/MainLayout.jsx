@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout, theme } from "antd";
 import HeaderBar from "./HeaderBar";
 import MyContent from "./MyContent";
@@ -16,7 +15,7 @@ const MainLayout = () => {
             <HeaderBar/>
             <Layout >
                 <SideBar />
-                <Layout style={{ padding: "24px" }} >
+                <Layout style={{ padding: "16px" }} >
                     <MyContent>
                      <Outlet />
                     </MyContent>

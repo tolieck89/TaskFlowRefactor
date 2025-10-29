@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useUserModal } from "../app/hooks/useUserModal";
+import { logOut } from "../Pages/Auth/AuthSlicer";
+
 
 const { Header} = Layout;
 
@@ -16,10 +18,16 @@ const {open} = useUserModal();
 
   const [buttontext, setButtontext] = useState('➕ New user');
 
+
+
   const handleClick = () => {
     console.log('clicked')
 
     open();
+  }
+
+  const handleLogout = () => {
+    dispatch(logOut());
   }
 
 
@@ -43,13 +51,14 @@ return (
       
         { key: "1", label: <Link to="/dashboard">Dashboard</Link>  },
         { key: "2", label: <Link to="/tasks">Tasks</Link> },
-        { key: "3", label: <Link to="/settings">Settings</Link> },
+        // { key: "3", label: <Link to="/settings">Settings</Link> },
     
             ]}
     />
     </div>
       <div style={{ display: "flex",  alignItems: "center"}}>
-        <Button type="primary" onClick={handleClick}>{buttontext}  </Button>
+        {/* <Button type="dashed" onClick={handleClick}>{buttontext}  </Button> */}
+        <Button type="dashed" background="none" onClick={handleLogout}>Log out</Button>
       </div>  
   
 

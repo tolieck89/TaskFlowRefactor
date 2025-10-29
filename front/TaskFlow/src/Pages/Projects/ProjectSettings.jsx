@@ -6,7 +6,7 @@ const ProjectSettings = () => {
     <div>
      
 
-      <p>Projects</p>
+      <p>Project settings</p>
     </div>
   )
 }

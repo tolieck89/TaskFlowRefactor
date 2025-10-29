@@ -13,12 +13,14 @@ const authSlice = createSlice({
     login: (state, action) => {
 
         state.isAuth = true;
-        localStorage.setItem('auth', (JSON.stringify(state.isAuth)))
+        state.authUser = action.payload;
+        localStorage.setItem('auth', (JSON.stringify(state)))
     },
     
     logOut: (state) => {
-        state.auth = false;
-        localStorage.setItem('auth', state.mode); //
+        state.isAuth = false;
+        state.authUser = "";
+        localStorage.setItem('auth', state); //
     }
   }
 });

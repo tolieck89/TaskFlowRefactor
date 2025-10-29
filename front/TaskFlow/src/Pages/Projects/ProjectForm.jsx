@@ -1,7 +1,8 @@
 import { Form, Input, Radio, Select, Space} from 'antd';
 import { useUserModal } from '../../app/hooks/useUserModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProject } from './ProjectSlicer';
+import userSlice from '../Users/userSlicer'
 
 
 const layout = {
@@ -23,27 +24,22 @@ const ProjectForm = ({ form }) => {
     const {close} = useUserModal();
     const disp = useDispatch();
 
-  
-
-
     const onFinish = values => {
-  console.log(values);
+    console.log(values);
 
   disp(addProject(values));
   close();
 };
 
+const variant = Form.useWatch('variant', form);
 
+const users = useSelector(state => state.users);
 
- const variant = Form.useWatch('variant', form);
+const options = users.map(user =>({
+ label: user.name,
+ value: user.id,
+}));
 
- const options = [];
-for (let i = 10; i < 36; i++) {
-  options.push({
-    value: i.toString(36) + i,
-    label: i.toString(36) + i,
-  });
-}
 
 const handleChange = value => {
   console.log(`selected ${value}`);
@@ -65,24 +61,20 @@ const handleChange = value => {
       <Input />
       </Form.Item>
       
-
-    
-    <Form.Item name={['project', 'group']}  label="Grant access for groups"  >
+    <Form.Item name={['project', 'group']}  label="Grant access for"  >
      <Select
     mode="multiple"
+    showSearch 
+      filterOption={(input, option) =>
+    option.label.toLowerCase().includes(input.toLowerCase())
+  }
+
     style={{ width: '100%' }}
-    placeholder="select one country"
-    defaultValue={['china']}
+    placeholder="Select at least one employee or group"
+    defaultValue={[]}
     onChange={handleChange}
     options={options}
-    optionRender={option => (
-      <Space>
-        <span role="img" aria-label={option.data.label}>
-          {option.data.emoji}
-        </span>
-        {option.data.desc}
-      </Space>
-    )}
+    
   />
     </Form.Item>
     <Form.Item name={['project', 'issuetype']}  label="Issue types"  >
@@ -92,7 +84,7 @@ const handleChange = value => {
     placeholder="Input isue types for this project"
    
     onChange={handleChange}
-    options={options}
+  
   
   />
     </Form.Item>

@@ -1,9 +1,7 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Flex } from 'antd';
-import userSlice from "../Users/userSlicer"
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login, logOut } from "./AuthSlicer"
-import { openModal } from '../../Components/modalSlicer';
 import { useUserModal } from "../../app/hooks/useUserModal";
 
 
@@ -24,7 +22,7 @@ const AuthPage = () => {
       if(index === -1){
         return "There is no user with this username"
       } else if (userInfo[index].password === values.password){
-        dispatch(login());
+        dispatch(login(values.username));
         } else {
             return "Wrong password"
           }

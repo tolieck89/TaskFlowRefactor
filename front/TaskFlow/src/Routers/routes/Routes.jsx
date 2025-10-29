@@ -92,6 +92,7 @@ const router = createBrowserRouter([
           <ProtectedRoute minRole={2}>
             <Users />
           </ProtectedRoute>
+          
         ),
       },
 
@@ -104,3 +105,4 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
+

@@ -4,6 +4,7 @@ import { useUserModal } from '../app/hooks/useUserModal';
 import { addUser } from '../Pages/Users/userSlicer';
 import { useDispatch } from 'react-redux';
 import { sanitizeUser } from '../app/hooks/sanitazeUser';
+import { login } from '../Pages/Auth/AuthSlicer';
 
 
 
@@ -29,6 +30,7 @@ const UserForm = ({ form }) => {
   console.log(values);
   const cleanedUser = sanitizeUser(values.user);
   disp(addUser(cleanedUser));
+ 
   close();
 };
 

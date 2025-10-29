@@ -11,7 +11,7 @@ export function useUserModal(){
     isOpen,
     mode,
     title,
-    open: (mode = 'create',  title = "New user") => dispatch(openModal({ mode, title })),
+    open: (mode = 'create',  title = "New user", user = {}) => dispatch(openModal({ mode, title, user })),
     close: () => dispatch(closeModal()),
     setMode: (mode) => dispatch(changeMode({ mode }))
   };
