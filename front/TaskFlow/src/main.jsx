@@ -15,7 +15,7 @@ function AppWrapper(){
       theme={{
         algorithm: themeMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
-          colorPrimary: "#1677ff",
+          colorPrimary: "#25303fff",
         },
       }}
     >

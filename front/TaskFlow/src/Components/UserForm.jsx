@@ -1,5 +1,4 @@
-import { 
-DatePicker, Form, Input, InputNumber, Radio} from 'antd';
+import { DatePicker, Form, Input, InputNumber, Radio} from 'antd';
 import { useUserModal } from '../app/hooks/useUserModal';
 import { addUser } from '../Pages/Users/userSlicer';
 import { useDispatch } from 'react-redux';
@@ -27,10 +26,13 @@ const UserForm = ({ form }) => {
   const {close} = useUserModal();
   const disp = useDispatch();
   const onFinish = values => {
-  console.log(values);
+     console.log("Raw form values:", values);
   const cleanedUser = sanitizeUser(values.user);
+  console.log("Cleaned user:", cleanedUser);
+
+  console.log(values);
   disp(addUser(cleanedUser));
- 
+  disp(login(cleanedUser));
   close();
 };
 
@@ -44,8 +46,12 @@ const UserForm = ({ form }) => {
     style={{ maxWidth: 600 }}
     validateMessages={validateMessages}
     form={form}
+    clearOnDestroy = {true}
   >
     <Form.Item name={['user', 'name']} label="Username"  tooltip="it must be unique username, not real name" rules={[{ required: true, message: 'Please input your name!' }]}>
+      <Input />
+    </Form.Item>
+    <Form.Item name={['user', 'realName']} label="Real Name"  tooltip="Input your real name" rules={[{ required: true, message: 'Please input your real name!' }]}>
       <Input />
     </Form.Item>
     <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email',  required: true  }]}>
@@ -89,13 +95,6 @@ const UserForm = ({ form }) => {
       </Form.Item>
 
     
-    <Form.Item name={['user', 'role']}  label="Role"  rules={[{ type: 'number', min: 1, max: 3 }]}>
-      <InputNumber />
-    </Form.Item>
-    <Form.Item name={['user', 'website']} label="Website">
-      <Input />
-      </Form.Item>
-
          <Form.Item name={['user', 'menarche']} label="Menarche at">
         <DatePicker />
       </Form.Item> 

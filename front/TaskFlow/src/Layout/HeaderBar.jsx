@@ -51,7 +51,7 @@ return (
       
         { key: "1", label: <Link to="/dashboard">Dashboard</Link>  },
         { key: "2", label: <Link to="/tasks">Tasks</Link> },
-        // { key: "3", label: <Link to="/settings">Settings</Link> },
+        { key: "3", label: <Link to="/settings">Settings</Link> },
     
             ]}
     />

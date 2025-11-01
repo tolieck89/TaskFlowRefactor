@@ -3,44 +3,24 @@ import { useUserModal } from "../app/hooks/useUserModal";
 import { useSelector } from "react-redux";
 import UserForm from "./UserForm";
 import ProjectForm from "../Pages/Projects/ProjectForm";
-import UserCard from "../Pages/Users/UsersSettings";
-
+import UserCard from "../Pages/Users/UserCard";
+import { useState } from "react";
 const UserModal = () => {
   const [form] = Form.useForm();
-    var  modalTitle = '';
-
-
+  
   const { close, mode, title, user } = useUserModal();
     
   const isModalOpen = useSelector(state => state.userModal.isOpen);
 
-  
-const handleCancel = () => {
+  const handleCancel = () => {
     close();
 }
 
-function handleTitle()  {
-
-  switch (mode) {
-    case "edit":
-      modalTitle = "Edit user info"
-
-    case "newProject":
-      modalTitle = "New project"
-
-    case "userCard":
-      modalTitle = "User Card"
-     
-      default: 
-      modalTitle = "Registration"
-      
-  }
-
-}
 
 let content;
 if (mode === "userCard") {
-  content = <UserCard user={user}/>;
+  console.log("Саме це я отримую в User Modal", mode, user);
+  content = <UserCard user={user} form={form}/>;
 } else if (mode !== "newProject") {
   content = <UserForm form={form} />;
 } else {
@@ -61,7 +41,6 @@ return (
 
       </Modal>
 )
-
 }
 
 export default UserModal;

@@ -2,7 +2,6 @@ import { Form, Input, Radio, Select, Space} from 'antd';
 import { useUserModal } from '../../app/hooks/useUserModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProject } from './ProjectSlicer';
-import userSlice from '../Users/userSlicer'
 
 
 const layout = {

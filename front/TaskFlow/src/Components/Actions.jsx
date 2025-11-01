@@ -1,6 +1,7 @@
 import React from 'react';
 import { DeleteOutlined, EditOutlined, EyeOutlined, CopyOutlined, LockOutlined } from '@ant-design/icons';
 import { Popconfirm, Tooltip, Space } from 'antd';
+import { Link } from 'react-router-dom';
 
 const ActionsBlock  = ({onView, onEdit, onDelete, onCopy, onLock, item}) => {
 
@@ -8,14 +9,15 @@ const ActionsBlock  = ({onView, onEdit, onDelete, onCopy, onLock, item}) => {
            
         <Space>
         
-        { onView && (
+    
             <Tooltip title="View">
+                <Link to={`/users/${item.id}`} state={{ item }}>
+
                 <EyeOutlined 
-                onClick={() => onView(item)}
-                style={{cursor: 'pointer'}}
-                / >
+                style={{cursor: 'pointer'}} />
+                </Link>
             </Tooltip>
-        )}
+   
         
         {onEdit && (
             <Tooltip title='Edit record'>

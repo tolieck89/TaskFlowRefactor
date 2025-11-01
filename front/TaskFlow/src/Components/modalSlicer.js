@@ -15,13 +15,17 @@ const userModalSlice = createSlice({
   reducers: {
     openModal: (state, action) => {
       console.log("Hello from reducer")
-        state.mode = action.payload.mode || state.initialState.mode;
-        state.title = action.payload.title || state.initialState.title;
-        state.user = action.payload.user || state.initialState.user;
+        state.mode = action.payload.mode || initialState.mode;
+        state.title = action.payload.title || initialState.title;
+        state.user = action.payload.user || initialState.user;
         state.isOpen = true;
     },
     closeModal: (state, action) => {
         state.isOpen = false;
+         state.user = {};
+  state.mode = initialState.mode;
+  state.title = initialState.title;
+
     },
     changeMode: (state, action) => {
         state.mode = action.payload.mode;

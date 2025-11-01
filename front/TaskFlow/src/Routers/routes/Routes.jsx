@@ -15,6 +15,7 @@ import TaskDetails from "../../Pages/Tasks/TaskDetails";
 import TaskSettings from "../../Pages/Tasks/TaskSettings";
 import ProfileSettings from "../../Pages/Profile/ProfileSettings";
 import MyAssignedTasks from "../../Pages/Tasks/MyAssignedTasks";
+import UserCard from "../../Pages/Users/UserCard";
 
 
 const router = createBrowserRouter([
@@ -86,16 +87,37 @@ const router = createBrowserRouter([
         ],
       },
 
-      {
-        path: 'users',
-        element: (
-          <ProtectedRoute minRole={2}>
-            <Users />
-          </ProtectedRoute>
+      // {
+      //   path: 'users',
+      //   element: (
+      //     <ProtectedRoute minRole={2}>
+      //       <Users />
+      //     </ProtectedRoute>
           
-        ),
-      },
-
+      //   ),
+      // },
+{  
+  path: 'users',
+  children: [
+    { index: true, element: <Users /> }, 
+    {
+      path: ':userID',
+      children: [
+        { index: true, element: <UserCard /> }, // /projects/:projectId
+        // { path: 'dashboard', element: <ProjectDashboard /> }, // /projects/:projectId/dashboard
+        // { path: 'tasks', element: <ProjectTasks /> },
+        {
+          path: 'settings',
+          element: (
+            <ProtectedRoute minRole={2}>
+              <ProjectSettings />
+            </ProtectedRoute>
+          ),
+        },
+      ],
+    },
+  ],
+},
       {
         path: 'notifications',
         element: <Notifications />,

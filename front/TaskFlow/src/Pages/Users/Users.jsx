@@ -1,26 +1,16 @@
-import React from 'react'
-import { Layout, Menu, theme, Button, Space, Table, Tag } from "antd"; 
-import { useUserModal } from '../../app/hooks/useUserModal';
-import { useSelector } from 'react-redux';
+import { Space, Table, Tag } from "antd"; 
+import { useDispatch, useSelector } from 'react-redux';
 import ActionsBlock from '../../Components/Actions';
-import { DeleteOutlined, EditOutlined, EyeOutlined, CopyOutlined, LockOutlined } from '@ant-design/icons';
-import UserCard from './UsersSettings';
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { removeUser } from "./userSlicer";
 
 const Users = () => {
   const data = useSelector((state) => state.users);
-  const {open} = useUserModal();
+    const location = useLocation();
+  const user = location.state?.item;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  
-  const handleClick = () => {
-    open("newProject", "New Project");
-  }
-
-  const handleonView = (user) => {
-    open("userCard", "userCard", user )
-  }
-
-  
 
   const columns = [
       {
@@ -55,21 +45,24 @@ const Users = () => {
     key: 'action',
     render: (_, record) => (
       <Space size="middle">
-   
+      
+
         <ActionsBlock
             item={record}
-        onView={item => handleonView(item)}
-        onEdit={(item) => console.log('Edit user:', item)}
-        onDelete={(item) => console.log('Delete user:', item)}
+        // onView={item => state={item}}
+       onEdit={(item) => {
+  navigate(`/users/${item.id}`, { state: { item, editMode: true } });
+}}
+
+        onDelete={(item) => dispatch(removeUser(item.id))}
         onCopy={(item) => console.log('Copy user:', item)}
         onLock={(item) => console.log('Lock user:', item)}
         />
-        
+      
       </Space>
     ),
   },
 ];
-
 
   return (
     <div className='users' style={{ display: "flex", flexDirection:"column", gap: "24px"}}>
@@ -77,10 +70,8 @@ const Users = () => {
 
       <Table columns={columns} dataSource={data}  rowKey="id"/>
 
-
-
     </div>
   )
 }
 
-export default Users
+export default Users;

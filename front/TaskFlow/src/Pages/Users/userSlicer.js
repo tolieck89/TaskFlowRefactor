@@ -11,28 +11,31 @@ const userSlice = createSlice({
     newUser.role = 0;
     newUser.group = [];
     newUser.allowedProjects = [];
-    newUser.id= state.length;
+    newUser.id= state.length+1;
     newUser.isLocked= false;
-    newUser.regdate = new Date();
+    newUser.regdate = new Date().toISOString();
      state.push(newUser);
       localStorage.setItem('users', JSON.stringify(state));
 
     },
     removeUser: (state, action) => {
-      const updated = state.filter(user => user.id == action.payload);
+  const id = action.payload;
+  const filtered = state.filter(user => user.id !== id);
 
-      localStorage.setItem('users', JSON.stringify(updated));
-      return updated;
+  // Очистити state і запушити новий масив
+  state.length = 0;
+  filtered.forEach(user => state.push(user));
+
+  localStorage.setItem('users', JSON.stringify(state));
+
     }, 
      editUser: (state, action) => {
         const updated = state.map(
-            user => user.id===action.payload.uid ?action.payload : user
+            user => user.id===action.payload.id ? action.payload : user
         )
              localStorage.setItem('users', JSON.stringify(updated));
       return updated;
-    }
-
-
+    },
   }
 });
 
