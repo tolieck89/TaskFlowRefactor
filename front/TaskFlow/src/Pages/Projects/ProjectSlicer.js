@@ -3,15 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = JSON.parse(localStorage.getItem('projects')) || [];
 
 const projectSlice = createSlice({
-  name: 'project',
+  name: 'projects',
   initialState,
   reducers: {
     addProject: (state, action) => {
     const newProject = action.payload;
  
-    newProject.id= state.length;
-    newProject.projectTasks = [];
-     state.push(newProject);
+       state.push(newProject);
       localStorage.setItem('projects', JSON.stringify(state));
 
     },

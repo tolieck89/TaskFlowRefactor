@@ -7,17 +7,18 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-    const newUser = action.payload;
-    newUser.role = 0;
-    newUser.group = [];
-    newUser.allowedProjects = [];
-    newUser.id= state.length+1;
-    newUser.isLocked= false;
-    newUser.regdate = new Date().toISOString();
-     state.push(newUser);
+      const newUser = action.payload;
+      newUser.role = 0;
+      newUser.group = [];
+      newUser.allowedProjects = [];
+      newUser.id= Date.now().toString();
+      newUser.isLocked= false;
+      newUser.type = "user";
+      newUser.regdate = new Date().toISOString();
+      state.push(newUser);
       localStorage.setItem('users', JSON.stringify(state));
-
     },
+    
     removeUser: (state, action) => {
   const id = action.payload;
   const filtered = state.filter(user => user.id !== id);
@@ -31,7 +32,7 @@ const userSlice = createSlice({
     }, 
      editUser: (state, action) => {
         const updated = state.map(
-            user => user.id===action.payload.id ? action.payload : user
+            user => user.id===action.payload.id ?  { ...user, ...action.payload } : user
         )
              localStorage.setItem('users', JSON.stringify(updated));
       return updated;

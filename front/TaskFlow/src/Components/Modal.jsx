@@ -5,6 +5,8 @@ import UserForm from "./UserForm";
 import ProjectForm from "../Pages/Projects/ProjectForm";
 import UserCard from "../Pages/Users/UserCard";
 import { useState } from "react";
+import GroupForm from "./GroupForm";
+
 const UserModal = () => {
   const [form] = Form.useForm();
   
@@ -18,9 +20,9 @@ const UserModal = () => {
 
 
 let content;
-if (mode === "userCard") {
+if (mode === "groupForm") {
   console.log("Саме це я отримую в User Modal", mode, user);
-  content = <UserCard user={user} form={form}/>;
+  content = <GroupForm form={form}/>;
 } else if (mode !== "newProject") {
   content = <UserForm form={form} />;
 } else {

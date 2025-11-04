@@ -16,9 +16,6 @@ const HeaderBar = () => {
 const dispatch = useDispatch();
 const {open} = useUserModal();
 
-  const [buttontext, setButtontext] = useState('➕ New user');
-
-
 
   const handleClick = () => {
     console.log('clicked')
@@ -38,7 +35,7 @@ return (
     <Link to="/home">
     <div style={{ color: "white", fontWeight: "bold", marginRight: 20 }}>
       <img src="/logoTask.png" alt="go home" width={36} />
-      TaskFlow
+      BetterThanJira
     </div>
     </Link>
     
@@ -57,7 +54,6 @@ return (
     />
     </div>
       <div style={{ display: "flex",  alignItems: "center"}}>
-        {/* <Button type="dashed" onClick={handleClick}>{buttontext}  </Button> */}
         <Button type="dashed" background="none" onClick={handleLogout}>Log out</Button>
       </div>  
   

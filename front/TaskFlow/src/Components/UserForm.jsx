@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, InputNumber, Radio} from 'antd';
+import { DatePicker, Form, Input, Radio} from 'antd';
 import { useUserModal } from '../app/hooks/useUserModal';
 import { addUser } from '../Pages/Users/userSlicer';
 import { useDispatch } from 'react-redux';
@@ -34,6 +34,8 @@ const UserForm = ({ form }) => {
   disp(addUser(cleanedUser));
   disp(login(cleanedUser));
   close();
+      form.resetFields();
+
 };
 
   const variant = Form.useWatch('variant', form);
@@ -46,7 +48,7 @@ const UserForm = ({ form }) => {
     style={{ maxWidth: 600 }}
     validateMessages={validateMessages}
     form={form}
-    clearOnDestroy = {true}
+
   >
     <Form.Item name={['user', 'name']} label="Username"  tooltip="it must be unique username, not real name" rules={[{ required: true, message: 'Please input your name!' }]}>
       <Input />

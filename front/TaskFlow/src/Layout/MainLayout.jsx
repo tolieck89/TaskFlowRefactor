@@ -3,7 +3,7 @@ import HeaderBar from "./HeaderBar";
 import MyContent from "./MyContent";
 import SideBar from "./SideBar";
 import { Outlet, Link } from 'react-router-dom';
-
+import BackButton from "../Components/BackButton";
 
 const MainLayout = () => {
     const {
@@ -17,6 +17,7 @@ const MainLayout = () => {
                 <SideBar />
                 <Layout style={{ padding: "16px" }} >
                     <MyContent>
+                        
                      <Outlet />
                     </MyContent>
                 </Layout>

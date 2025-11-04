@@ -23,12 +23,19 @@ const ProjectForm = ({ form }) => {
     const {close} = useUserModal();
     const disp = useDispatch();
 
-    const onFinish = values => {
-    console.log(values);
+const onFinish = values => {
+  const project = {
+    ...values.project,
+    id: Date.now(), 
+    projectTasks: [],
+    type: "project"
+  };
 
-  disp(addProject(values));
+  disp(addProject(project));
+  form.resetFields();
   close();
 };
+
 
 const variant = Form.useWatch('variant', form);
 

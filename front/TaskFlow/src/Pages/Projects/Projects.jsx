@@ -7,12 +7,9 @@ import ActionsBlock from '../../Components/Actions';
 
 const Projects = () => {
 
-  const data = useSelector((state) => state.project);
+  const data = useSelector((state) => state.projects);
   const {open} = useUserModal();
-  const normalizedData = data.map(item => ({
-  ...item.project,
-  id: item.id,
-}));
+
   
   const handleClick = () => {
     open("newProject", "New Project");
@@ -77,7 +74,7 @@ const Projects = () => {
     <div className='projects' style={{ display: "flex", flexDirection:"column", gap: "24px"}}>
       <Button type="primary" style={{ alignSelf: "flex-start" }} onClick={handleClick}>➕ New project</Button>
 
-      <Table columns={columns} dataSource={normalizedData}  rowKey="id"/>
+      <Table columns={columns} dataSource={data}  rowKey="id"/>
     </div>
   )
 }

@@ -1,3 +1,5 @@
+//Routes.jsx
+
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../../Layout/MainLayout";
 import Projects from "../../Pages/Projects/Projects";
@@ -9,14 +11,15 @@ import AuthPage from "../../Pages/Auth/AuthPage";
 import Profile from "../../Pages/Profile/Profile";
 import ProjectDashboard from "../../Pages/Projects/ProjectDashboard";
 import ProjectTasks from "../../Pages/Tasks/ProjectTasks";
-import ProtectedRoute from "./ProtectedRoute";
-import ProjectSettings from "../../Pages/Projects/ProjectSettings";
 import TaskDetails from "../../Pages/Tasks/TaskDetails";
-import TaskSettings from "../../Pages/Tasks/TaskSettings";
-import ProfileSettings from "../../Pages/Profile/ProfileSettings";
 import MyAssignedTasks from "../../Pages/Tasks/MyAssignedTasks";
 import UserCard from "../../Pages/Users/UserCard";
-
+import SettingsGeneral from "../../Pages/Settings/SettingsGeneral";
+import SettingsUsers from "../../Pages/Settings/SettingsUsers"; 
+import SettingsGroups from "../../Pages/Settings/SettingsGroups";
+import SettingsRoles from "../../Pages/Settings/SettingsRoles";
+import Settings from "../../Pages/Settings/SettingsLayOut";
+import SettingsGroup from "../../Pages/Settings/SettingsGroup";
 
 const router = createBrowserRouter([
   {
@@ -36,14 +39,7 @@ const router = createBrowserRouter([
         { index: true, element: <ProjectDashboard /> }, // /projects/:projectId
         { path: 'dashboard', element: <ProjectDashboard /> }, // /projects/:projectId/dashboard
         { path: 'tasks', element: <ProjectTasks /> },
-        {
-          path: 'settings',
-          element: (
-            <ProtectedRoute minRole={2}>
-              <ProjectSettings />
-            </ProtectedRoute>
-          ),
-        },
+     
       ],
     },
   ],
@@ -58,44 +54,45 @@ const router = createBrowserRouter([
             path: ':taskId',
             children: [
               { path: 'details', element: <TaskDetails /> },
-              {
-                path: 'settings',
-                element: (
-                  <ProtectedRoute minRole={2}>
-                    <TaskSettings />
-                  </ProtectedRoute>
-                ),
-              },
+             
             ],
           },
         ],
       },
+         {
+  path: 'settings', 
+  element: <Settings />, 
+  children: [
+    { index: true, element: <SettingsGeneral /> }, // /settings
+    { path: 'groups', element: <SettingsGroups />, 
+        children: [
+    {
+      path: ':groupID',
+ 
+      element: <SettingsGroup />  
+      
+     
+    },
+  ],
+
+
+
+    }, // /settings/groups
+    { path: 'roles', element: <SettingsRoles /> },   // /settings/roles
+    { path: 'users', element: <SettingsUsers /> },   // /settings/users
+  ],
+},
+
 
       {
         path: 'user-profile',
         children: [
           { index: true, element: <Profile /> },
           { path: 'tasks', element: <MyAssignedTasks /> },
-          {
-            path: 'settings',
-            element: (
-              <ProtectedRoute minRole={1}>
-                <ProfileSettings />
-              </ProtectedRoute>
-            ),
-          },
+      
         ],
       },
 
-      // {
-      //   path: 'users',
-      //   element: (
-      //     <ProtectedRoute minRole={2}>
-      //       <Users />
-      //     </ProtectedRoute>
-          
-      //   ),
-      // },
 {  
   path: 'users',
   children: [
@@ -103,17 +100,9 @@ const router = createBrowserRouter([
     {
       path: ':userID',
       children: [
-        { index: true, element: <UserCard /> }, // /projects/:projectId
-        // { path: 'dashboard', element: <ProjectDashboard /> }, // /projects/:projectId/dashboard
-        // { path: 'tasks', element: <ProjectTasks /> },
-        {
-          path: 'settings',
-          element: (
-            <ProtectedRoute minRole={2}>
-              <ProjectSettings />
-            </ProtectedRoute>
-          ),
-        },
+        { index: true, element: <UserCard /> }, 
+
+        
       ],
     },
   ],

@@ -1,23 +1,35 @@
-import React from 'react';
+//Actions.jsx
+
 import { DeleteOutlined, EditOutlined, EyeOutlined, CopyOutlined, LockOutlined } from '@ant-design/icons';
 import { Popconfirm, Tooltip, Space } from 'antd';
 import { Link } from 'react-router-dom';
 
 const ActionsBlock  = ({onView, onEdit, onDelete, onCopy, onLock, item}) => {
 
+ const getPath = (item) => {
+  switch (item.type) {
+    case 'group':
+      return `/settings/groups/${item.id}`;
+    case 'project':
+      return `/projects/${item.id}`;
+    case 'user':
+      return `/users/${item.id}`;
+    default:
+      return '/'; ncds
+  }
+};
+
     return (
            
         <Space>
         
-    
             <Tooltip title="View">
-                <Link to={`/users/${item.id}`} state={{ item }}>
+                <Link to={getPath(item)} state={{ item }}>
 
                 <EyeOutlined 
                 style={{cursor: 'pointer'}} />
                 </Link>
             </Tooltip>
-   
         
         {onEdit && (
             <Tooltip title='Edit record'>
