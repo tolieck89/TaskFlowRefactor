@@ -1,45 +1,42 @@
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from 'antd';
 import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
   TeamOutlined,
-} from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const { Sider} = Layout;
+const { Sider } = Layout;
 
 const SideBar = () => {
-    const {
-      token: { colorBgContainer },
-    } = theme.useToken();
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
-    const username = useSelector((state) => state.auth.authUser)
+  const username = useSelector((state) => state.auth.authUser);
 
-
-  
   return (
-
-    <Sider width={200} >
-
+    <Sider width={200}>
       <Menu
         mode="inline"
         theme="dark"
-        defaultSelectedKeys={["1"]}
-        style={{ height: "100%", borderRight: 0}}
+        defaultSelectedKeys={['1']}
+        style={{ height: '100%', borderRight: 0 }}
         items={[
-          { key: "1", icon: <UserOutlined />, label: <Link to="/user-profile">{username}</Link> },
-          { key: "2", icon: <TeamOutlined />, label: <Link to="/users">Users</Link> },
-          { key: "3", icon: <LaptopOutlined />, label: <Link to="/projects">Projects</Link> },
-          { key: "4", icon: <NotificationOutlined />, label: <Link to="/notifications">Notifications</Link> },
-                ]}
+          { key: '1', icon: <UserOutlined />, label: <Link to="/user-profile">{username}</Link> },
+          { key: '2', icon: <TeamOutlined />, label: <Link to="/users">Users</Link> },
+          { key: '3', icon: <LaptopOutlined />, label: <Link to="/projects">Projects</Link> },
+          {
+            key: '4',
+            icon: <NotificationOutlined />,
+            label: <Link to="/notifications">Notifications</Link>,
+          },
+        ]}
       />
     </Sider>
-    )
-
-
-}
+  );
+};
 
 export default SideBar;
-

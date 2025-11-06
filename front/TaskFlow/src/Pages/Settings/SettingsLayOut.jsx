@@ -13,15 +13,15 @@ const Settings = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const activeKey = tabItems.find(tab => location.pathname.includes(tab.key))?.key || 'general';
+  const activeKey = tabItems.find((tab) => location.pathname.includes(tab.key))?.key || 'general';
 
   return (
     <>
-     <BackButton />
+      <BackButton />
       <Tabs
         activeKey={activeKey}
         onChange={(key) => {
-          const tab = tabItems.find(t => t.key === key);
+          const tab = tabItems.find((t) => t.key === key);
           if (tab) navigate(tab.path);
         }}
         items={tabItems.map(({ label, key }) => ({ label, key }))}

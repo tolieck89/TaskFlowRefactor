@@ -1,11 +1,9 @@
-import { DatePicker, Form, Input, Radio} from 'antd';
+import { DatePicker, Form, Input, Radio } from 'antd';
 import { useUserModal } from '../app/hooks/useUserModal';
 import { addUser } from '../Pages/Users/userSlicer';
 import { useDispatch } from 'react-redux';
 import { sanitizeUser } from '../app/hooks/sanitazeUser';
 import { login } from '../Pages/Auth/AuthSlicer';
-
-
 
 const layout = {
   labelCol: { span: 8 },
@@ -23,44 +21,52 @@ const validateMessages = {
 };
 
 const UserForm = ({ form }) => {
-  const {close} = useUserModal();
+  const { close } = useUserModal();
   const disp = useDispatch();
-  const onFinish = values => {
-     console.log("Raw form values:", values);
-  const cleanedUser = sanitizeUser(values.user);
-  console.log("Cleaned user:", cleanedUser);
+  const onFinish = (values) => {
+    console.log('Raw form values:', values);
+    const cleanedUser = sanitizeUser(values.user);
+    console.log('Cleaned user:', cleanedUser);
 
-  console.log(values);
-  disp(addUser(cleanedUser));
-  disp(login(cleanedUser));
-  close();
-      form.resetFields();
-
-};
+    console.log(values);
+    disp(addUser(cleanedUser));
+    disp(login(cleanedUser));
+    close();
+    form.resetFields();
+  };
 
   const variant = Form.useWatch('variant', form);
 
   return (
     <Form
-    {...layout}
-    name="nest-messages"
-    onFinish={onFinish}
-    style={{ maxWidth: 600 }}
-    validateMessages={validateMessages}
-    form={form}
-
-  >
-    <Form.Item name={['user', 'name']} label="Username"  tooltip="it must be unique username, not real name" rules={[{ required: true, message: 'Please input your name!' }]}>
-      <Input />
-    </Form.Item>
-    <Form.Item name={['user', 'realName']} label="Real Name"  tooltip="Input your real name" rules={[{ required: true, message: 'Please input your real name!' }]}>
-      <Input />
-    </Form.Item>
-    <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email',  required: true  }]}>
-      <Input />
+      {...layout}
+      name="nest-messages"
+      onFinish={onFinish}
+      style={{ maxWidth: 600 }}
+      validateMessages={validateMessages}
+      form={form}
+    >
+      <Form.Item
+        name={['user', 'name']}
+        label="Username"
+        tooltip="it must be unique username, not real name"
+        rules={[{ required: true, message: 'Please input your name!' }]}
+      >
+        <Input />
       </Form.Item>
-       <Form.Item
-        name={["user", "password"]}
+      <Form.Item
+        name={['user', 'realName']}
+        label="Real Name"
+        tooltip="Input your real name"
+        rules={[{ required: true, message: 'Please input your real name!' }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email', required: true }]}>
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['user', 'password']}
         label="Password"
         rules={[
           {
@@ -70,13 +76,12 @@ const UserForm = ({ form }) => {
         ]}
         hasFeedback
       >
-        
         <Input.Password />
       </Form.Item>
-  <Form.Item
+      <Form.Item
         name="confirm"
         label="Confirm Password"
-        dependencies={["user", 'password']}
+        dependencies={['user', 'password']}
         hasFeedback
         rules={[
           {
@@ -85,7 +90,7 @@ const UserForm = ({ form }) => {
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue(["user",'password']) === value) {
+              if (!value || getFieldValue(['user', 'password']) === value) {
                 return Promise.resolve();
               }
               return Promise.reject(new Error('The new password that you entered do not match!'));
@@ -96,24 +101,22 @@ const UserForm = ({ form }) => {
         <Input.Password />
       </Form.Item>
 
-    
-         <Form.Item name={['user', 'menarche']} label="Menarche at">
+      <Form.Item name={['user', 'menarche']} label="Menarche at">
         <DatePicker />
-      </Form.Item> 
+      </Form.Item>
 
-    <Form.Item name={['user', 'introduction']} label="Introduction">
-      <Input.TextArea />
-    </Form.Item>
-    <Form.Item label="Gender" name={['user', 'gender']}>
-          <Radio.Group>
-            <Radio value="Male"> Male </Radio>
-            <Radio value="Female"> Female </Radio>
-            <Radio value="Desk"> Desk </Radio>
-          </Radio.Group>
-        </Form.Item>
-    
-  </Form>
+      <Form.Item name={['user', 'introduction']} label="Introduction">
+        <Input.TextArea />
+      </Form.Item>
+      <Form.Item label="Gender" name={['user', 'gender']}>
+        <Radio.Group>
+          <Radio value="Male"> Male </Radio>
+          <Radio value="Female"> Female </Radio>
+          <Radio value="Desk"> Desk </Radio>
+        </Radio.Group>
+      </Form.Item>
+    </Form>
   );
-}
+};
 
 export default UserForm;

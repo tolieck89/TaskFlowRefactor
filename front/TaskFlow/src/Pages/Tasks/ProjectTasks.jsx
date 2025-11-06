@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const ProjectTasks = () => {
-  return (
-    <div>
-        Tasks
-    </div>
-  )
-}
+  return <div>Tasks</div>;
+};
 
-export default ProjectTasks
+export default ProjectTasks;

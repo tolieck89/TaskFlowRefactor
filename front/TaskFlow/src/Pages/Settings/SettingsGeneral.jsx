@@ -1,14 +1,4 @@
-
-
-
 const SettingsGeneral = () => {
-
-
-  return  (
-    <>
-    SettingsGeneral
-    
-    </>
-)
+  return <>SettingsGeneral</>;
 };
 export default SettingsGeneral;

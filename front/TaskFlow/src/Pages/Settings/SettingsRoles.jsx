@@ -1,13 +1,4 @@
-
-
-
 const SettingsRoles = () => {
-
-
-  return  (
-    <>
-    SettingsRoles
-    </>
-)
+  return <>SettingsRoles</>;
 };
 export default SettingsRoles;

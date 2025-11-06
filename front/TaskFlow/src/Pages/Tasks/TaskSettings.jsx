@@ -1,12 +1,7 @@
-
-import React from 'react'
+import React from 'react';
 
 const TaskSettings = () => {
-  return (
-    <div>
-        TaskSettings
-    </div>
-  )
-}
+  return <div>TaskSettings</div>;
+};
 
 export default TaskSettings;

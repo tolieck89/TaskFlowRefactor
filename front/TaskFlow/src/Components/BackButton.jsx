@@ -4,12 +4,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 const BackButton = () => {
   const navigate = useNavigate();
 
-  return (
-  
-     <ArrowLeftOutlined onClick={() => navigate(-1)}  />
-   
-  );
+  return <ArrowLeftOutlined onClick={() => navigate(-1)} />;
 };
 
 export default BackButton;
-

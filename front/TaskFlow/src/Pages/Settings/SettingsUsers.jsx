@@ -1,13 +1,4 @@
-
-
-
 const SettingsUsers = () => {
-
-
-  return  (
-    <>
-    SettingsUsers
-    </>
-)
+  return <>SettingsUsers</>;
 };
 export default SettingsUsers;

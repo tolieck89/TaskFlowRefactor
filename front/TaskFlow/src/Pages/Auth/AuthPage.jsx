@@ -1,34 +1,29 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Flex } from 'antd';
 import { useDispatch } from 'react-redux';
-import { login, logOut } from "./AuthSlicer"
-import { useUserModal } from "../../app/hooks/useUserModal";
-
-
+import { login, logOut } from './AuthSlicer';
+import { useUserModal } from '../../app/hooks/useUserModal';
 
 const AuthPage = () => {
   const dispatch = useDispatch();
 
-  const {open} = useUserModal();
+  const { open } = useUserModal();
 
+  const userInfo = JSON.parse(localStorage.getItem('users') || '[]');
 
-    const userInfo = JSON.parse(localStorage.getItem("users") || '[]')
+  const onFinish = (values) => {
+    console.log('Received values of form: ', values);
 
-    const onFinish = (values) => {
-      console.log('Received values of form: ', values);
-  
-      const index = userInfo.findIndex(user => user.name === values.username);
-        
-      if(index === -1){
-        return "There is no user with this username"
-      } else if (userInfo[index].password === values.password){
-        dispatch(login(values.username));
-        } else {
-            return "Wrong password"
-          }
-};
+    const index = userInfo.findIndex((user) => user.name === values.username);
 
-
+    if (index === -1) {
+      return 'There is no user with this username';
+    } else if (userInfo[index].password === values.password) {
+      dispatch(login(values.username));
+    } else {
+      return 'Wrong password';
+    }
+  };
 
   return (
     <Form
@@ -62,8 +57,7 @@ const AuthPage = () => {
         <Button block type="primary" htmlType="submit">
           Log in
         </Button>
-        Don't have account yet?  <a onClick={() => open()}>Register now!</a>
-
+        Don't have account yet? <a onClick={() => open()}>Register now!</a>
       </Form.Item>
     </Form>
   );

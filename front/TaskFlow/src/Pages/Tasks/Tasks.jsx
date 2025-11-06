@@ -1,81 +1,76 @@
-import React from 'react'
-import { Layout, Menu, theme, Button, Space, Table, Tag } from "antd"; 
+import React from 'react';
+import { Layout, Menu, theme, Button, Space, Table, Tag } from 'antd';
 import { useUserModal } from '../../app/hooks/useUserModal';
 import { useSelector } from 'react-redux';
 
-
-
 const Tasks = () => {
+  // const data = useSelector((state) => state.project);
+  // const { open } = useUserModal();
+  // const normalizedData = data.map((item) => ({
+  //   ...item.project,
+  //   id: item.id,
+  // }));
 
+  // const handleClick = () => {
+  //   open('newProject', 'New Project');
+  // };
 
-  const data = useSelector((state) => state.project);
-  const {open} = useUserModal();
-  const normalizedData = data.map(item => ({
-  ...item.project,
-  id: item.id,
-}));
-  
-  const handleClick = () => {
-    open("newProject", "New Project");
-  }
+  // const columns = [
+  //   {
+  //     title: 'Project key',
+  //     dataIndex: 'key',
+  //     key: 'key',
+  //     width: 'auto',
+  //   },
+  //   {
+  //     title: 'Project name',
+  //     dataIndex: 'name',
+  //     key: 'name',
+  //     render: (text) => <a>{text}</a>,
+  //   },
 
-  const columns = [
-      {
-    title: 'Project key',
-    dataIndex: 'key',
-    key: 'key',
-    width: "auto"
-  },
-  {
-    title: 'Project name',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a>{text}</a>,
-  },
+  //   {
+  //     title: 'Short description',
+  //     dataIndex: 'description',
+  //     key: 'description',
+  //   },
+  //   {
+  //     title: 'Tags',
+  //     key: 'issuetype',
+  //     dataIndex: 'issuetype',
+  //     render: (_, { issuetype }) => (
+  //       <>
+  //         {issuetype &&
+  //           issuetype.map((tag) => {
+  //             let color = tag.length > 5 ? 'geekblue' : 'green';
 
-  {
-    title: 'Short description',
-    dataIndex: 'description',
-    key: 'description',
-  },
-  {
-    title: 'Tags',
-    key: 'issuetype',
-    dataIndex: 'issuetype',
-    render: (_, { issuetype }) => (
-      <>
-        {issuetype && issuetype.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Details</a>
-        <a>Edit</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
+  //             return (
+  //               <Tag color={color} key={tag}>
+  //                 {tag.toUpperCase()}
+  //               </Tag>
+  //             );
+  //           })}
+  //       </>
+  //     ),
+  //   },
+  //   {
+  //     title: 'Action',
+  //     key: 'action',
+  //     render: (_, record) => (
+  //       <Space size="middle">
+  //         <a>Details</a>
+  //         <a>Edit</a>
+  //         <a>Delete</a>
+  //       </Space>
+  //     ),
+  //   },
+  // ];
   return (
     <div>
-        
-
-          <Table columns={columns} dataSource={normalizedData}  rowKey="id"/>
+      {/* <Table columns={columns} dataSource={normalizedData} rowKey="id" /> */}
+      Заглушка
     </div>
-  )
-}
+  );
+};
 
-export default Tasks
-
+export default Tasks;

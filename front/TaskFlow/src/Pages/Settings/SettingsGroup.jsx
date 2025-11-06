@@ -1,126 +1,91 @@
-//SettingsGroup.jsx
-import { useState, useEffect } from 'react';
-import { Badge, Descriptions,  Switch, Form, Input, Button, Flex, Checkbox, Radio }  from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import BackButton from '../../Components/BackButton';
-import { editGroup } from './groupsSlicer';
-
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { Descriptions, Form, Button } from 'antd';
 
 const SettingsGroup = () => {
-
-
   const location = useLocation();
-  const [form] = Form.useForm();
   const { groupID } = useParams();
-  const groups = useSelector(state => state.groups);
-  const group = groups.find(g => String(g.id) === groupID);
-  const x = 1
+  const navigate = useNavigate();
+  const groups = useSelector((state) => state.groups || []);
 
-   const [group, setGroup] = useState(null);
+  const resolvedGroup =
+    location.state?.item || groups.find((g) => String(g.id) === String(groupID)) || null;
+
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    const fromState = location.state?.item;
-    const fromStore = groups.find(g => String(g.id) === groupID);
-    setGroup(fromState || fromStore || null);
-  }, [groupID, groups, location.state]);
+    if (!resolvedGroup) return;
+    form.setFieldsValue({
+      groupName: resolvedGroup.groupName || '',
+      role: resolvedGroup.role || '',
+      allowedProjects: resolvedGroup.groupAllowedProjects || [],
+      groupDescription: resolvedGroup.groupDescription || '',
+    });
+  }, [resolvedGroup, form]);
 
+  const projects = useSelector((state) => state.projects);
 
-    useEffect(() => {
-    if (group) {
-      form.setFieldsValue({
-        groupName: group.groupName,
-        role: group.role,
-        allowedProjects: group.allowedProjects,
-        groupDescription: group.groupDescription,
-      });
+  const allowedProjects = (allowed) => {
+    let arr = [];
+    for (let p of allowed) {
+      console.log('Еллауд масив', allowed);
+      console.log('П', p);
+      for (let a of projects) {
+        console.log('AAA', a);
+        console.log(p == a.id);
+
+        if (p == a.id) {
+          arr.push(a.key);
+        }
+      }
+
+      console.log(arr);
     }
-  }, [group]);
-
-  const boxStyle = {
-    marginBottom: 24,
-    width: '100%',
+    return arr;
   };
 
-  const items = (group) => {
-  return  [
-    {
-      key: '1',
-      label: 'User ID',
-      children: group.id,
-    },
-    {
-      key: '2',
-      label: 'groupName',
-      children: group.groupName,
-    },
-
-    {
-      key: '4',
-      label: 'Allowed projects',
-      span: 2,
-      children: group.allowedProjects,
-    },
-    {
-      key: '5',
-      label: 'Role',
-      children: group.role,
-    },
-  ] }
-
-  const [editMode, setEditMode] = useState(false);
-  const dispatch = useDispatch();
-
-  const handleSubmit = (values) => {
-  const updatedGroup = {
-    ...group,
-    ...values,
+  const items = (resolvedGroup) => {
+    return [
+      {
+        key: '1',
+        label: 'Group ID',
+        children: resolvedGroup.id,
+      },
+      {
+        key: '2',
+        label: 'Group',
+        children: resolvedGroup.groupName,
+      },
+      {
+        key: '3',
+        label: 'Group role',
+        children: resolvedGroup.role,
+      },
+      {
+        key: '4',
+        label: 'groupDescription',
+        children: resolvedGroup.groupDescription,
+      },
+      {
+        key: '5',
+        label: 'Allowed projects',
+        children: allowedProjects(resolvedGroup.groupAllowedProjects),
+      },
+    ];
   };
-    dispatch(editGroup(updatedGroup));
-    setGroup(updatedGroup); 
-    setEditMode(false);
-};
 
-if (!group) return <div>❌ Group not found</div>;
+  if (!resolvedGroup) {
+    console.warn('⚠️ Group not found — rendering fallback (resolvedGroup is null)');
+    return <div>❌ Group not found</div>;
+  }
 
   return (
     <>
-       <Flex style={boxStyle} justify='space-between' align='center'>
-            <BackButton />
-             <Switch
-              checked={editMode}
-              onChange={setEditMode}
-              checkedChildren="Edit" unCheckedChildren="View"
-            />
-        </Flex> 
-
-  {!editMode ? (
-    <Descriptions
-      title="User Info"
-      layout="vertical"
-      bordered
-      items={items(group)}
-    />
-  ) : (
-    <Form form={form} onFinish={handleSubmit} layout="vertical"
-  
-  >
-    <Form.Item name="groupName" label="Group name">
-      <Input />
-  </Form.Item>
-
- 
-    
-    
-    <Descriptions layout="vertical" bordered>
-  <Descriptions.Item label="Group ID">{group.id}</Descriptions.Item>
- 
-</Descriptions>
-    <Button type="primary" htmlType="submit">Save</Button>
-  </Form>
-)}
-
- </>
-)
+      <Button onClick={() => navigate('/settings/groups')}>⬅️ Back to list</Button>
+      <Descriptions title="Group Info" layout="vertical" bordered items={items(resolvedGroup)} />
+    </>
+  );
 };
+
 export default SettingsGroup;
