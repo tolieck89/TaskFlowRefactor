@@ -1,16 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 
 const initialState = JSON.parse(localStorage.getItem('tasks')) || [];
 
 const taskSlice = createSlice({
-  name: 'task',
+  name: 'tasks',
   initialState,
   reducers: {
     addTask: (state, action) => {
       const newTask = action.payload;
 
-      newTask.id = `${newTask.projectKey}-${state.length}`;
-      newTask.projectTasks = [];
+      newTask.id = `${newTask.taskProject}-${state.length}`;
+      newTask.createdAt = dayjs().format('DD-MM-YY-HH-mm-ss');
+      newTask.type = 'task';
+      newTask.changeLog = [];
       state.push(newTask);
       localStorage.setItem('tasks', JSON.stringify(state));
     },
@@ -21,6 +24,7 @@ const taskSlice = createSlice({
       return updated;
     },
     editTask: (state, action) => {
+      action.payload.lastUpdate = dayjs().format('DD-MM-YY-HH-mm-ss');
       const updated = state.map((task) => (task.id === action.payload.id ? action.payload : task));
       localStorage.setItem('tasks', JSON.stringify(updated));
       return updated;

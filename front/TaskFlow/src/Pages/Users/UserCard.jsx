@@ -41,7 +41,6 @@ const UserCard = () => {
   const boxStyle = {
     marginBottom: 24,
     width: '100%',
-    // height: auto,
   };
 
   const items = (user) => {
@@ -176,7 +175,7 @@ const UserCard = () => {
             label="Choice access level"
             tooltip="1 - watcher, 2 - user, 3 - admin"
           >
-            <InputNumber min={0} max={3} defaultValue={1} />
+            <InputNumber min={0} max={3} initialvalues={1} />
           </Form.Item>
 
           <Descriptions layout="vertical" bordered>

@@ -10,13 +10,15 @@ import {
 import { Popconfirm, Tooltip, Space } from 'antd';
 import { Link } from 'react-router-dom';
 
-const ActionsBlock = ({ onView, onEdit, onDelete, onCopy, onLock, item }) => {
+const ActionsBlock = ({ onEdit, onDelete, onCopy, onLock, item }) => {
   const getPath = (item) => {
     switch (item.type) {
       case 'group':
         return `/settings/groups/${item.id}`;
       case 'project':
         return `/projects/${item.id}`;
+      case 'task':
+        return `/tasks/${item.id}`;
       case 'user':
         return `/users/${item.id}`;
       default:
@@ -31,11 +33,9 @@ const ActionsBlock = ({ onView, onEdit, onDelete, onCopy, onLock, item }) => {
         </Link>
       </Tooltip>
 
-      {onEdit && (
-        <Tooltip title="Edit record">
-          <EditOutlined onClick={() => onEdit(item)} style={{ cursor: 'pointer' }} />
-        </Tooltip>
-      )}
+      <Tooltip title="Edit record">
+        <EditOutlined onClick={() => onEdit(item)} style={{ cursor: 'pointer' }} />
+      </Tooltip>
 
       {onDelete && (
         <Tooltip title="remove item">

@@ -41,7 +41,7 @@ const ProjectForm = ({ form }) => {
 
   const options = users.map((user) => ({
     label: user.name,
-    value: user.id,
+    value: user.name,
   }));
 
   const handleChange = (value) => {
@@ -91,6 +91,14 @@ const ProjectForm = ({ form }) => {
           mode="tags"
           style={{ width: '100%' }}
           placeholder="Input isue types for this project"
+          onChange={handleChange}
+        />
+      </Form.Item>
+      <Form.Item name={['project', 'taskStatuses']} label="Task statuses">
+        <Select
+          mode="tags"
+          style={{ width: '100%' }}
+          placeholder="Input possible task statuses"
           onChange={handleChange}
         />
       </Form.Item>

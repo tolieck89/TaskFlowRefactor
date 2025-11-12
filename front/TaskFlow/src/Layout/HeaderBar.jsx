@@ -1,4 +1,4 @@
-import { Layout, Menu, theme, Button, Space, Switch } from 'antd';
+import { Layout, Menu, theme, Button, Space, Input } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,8 @@ const HeaderBar = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const { Search } = Input;
+  const onSearch = (value, _e, info) => console.log(info?.source, value);
 
   const dispatch = useDispatch();
   const { open } = useUserModal();
@@ -47,7 +49,8 @@ const HeaderBar = () => {
           ]}
         />
       </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
         <Button type="dashed" background="none" onClick={handleLogout}>
           Log out
         </Button>

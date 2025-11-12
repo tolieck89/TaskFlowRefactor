@@ -28,7 +28,6 @@ const UserForm = ({ form }) => {
     const cleanedUser = sanitizeUser(values.user);
     console.log('Cleaned user:', cleanedUser);
 
-    console.log(values);
     disp(addUser(cleanedUser));
     disp(login(cleanedUser));
     close();

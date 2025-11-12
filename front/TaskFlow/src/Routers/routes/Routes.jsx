@@ -50,7 +50,7 @@ const router = createBrowserRouter([
           { index: true, element: <Tasks /> },
           {
             path: ':taskId',
-            children: [{ path: 'details', element: <TaskDetails /> }],
+            children: [{ index: true, element: <TaskDetails /> }],
           },
         ],
       },

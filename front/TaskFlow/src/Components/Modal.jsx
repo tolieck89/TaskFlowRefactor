@@ -6,6 +6,7 @@ import ProjectForm from '../Pages/Projects/ProjectForm';
 import UserCard from '../Pages/Users/UserCard';
 import { useState } from 'react';
 import GroupForm from './GroupForm';
+import TaskForm from '../Pages/Tasks/TaskForm';
 
 const UserModal = () => {
   const [form] = Form.useForm();
@@ -22,10 +23,12 @@ const UserModal = () => {
   if (mode === 'groupForm') {
     console.log('Саме це я отримую в User Modal', mode, user);
     content = <GroupForm form={form} />;
-  } else if (mode !== 'newProject') {
-    content = <UserForm form={form} />;
-  } else {
+  } else if (mode === 'newProject') {
     content = <ProjectForm form={form} />;
+  } else if (mode === 'taskForm') {
+    content = <TaskForm form={form} />;
+  } else {
+    content = <UserForm form={form} />;
   }
 
   return (
