@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useUserModal } from '../app/hooks/useUserModal';
-import { logOut } from '../Pages/Auth/AuthSlicer';
+import { logOut } from '../app/Reducers/AuthSlicer';
 
 const { Header } = Layout;
 

@@ -1,9 +1,9 @@
 import { DatePicker, Form, Input, Radio } from 'antd';
 import { useUserModal } from '../app/hooks/useUserModal';
-import { addUser } from '../Pages/Users/userSlicer';
+import { addUser } from '../app/Reducers/userSlicer';
 import { useDispatch } from 'react-redux';
 import { sanitizeUser } from '../app/hooks/sanitazeUser';
-import { login } from '../Pages/Auth/AuthSlicer';
+import { login } from '../app/Reducers/AuthSlicer';
 
 const layout = {
   labelCol: { span: 8 },

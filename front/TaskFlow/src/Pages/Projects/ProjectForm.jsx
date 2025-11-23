@@ -1,7 +1,7 @@
 import { Form, Input, Radio, Select, Space } from 'antd';
 import { useUserModal } from '../../app/hooks/useUserModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProject } from './ProjectSlicer';
+import { addProject } from '../../app/Reducers/ProjectSlicer';
 
 const layout = {
   labelCol: { span: 8 },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, Switch } from 'antd';
 import { useDispatch } from 'react-redux';
-import { switchTheme } from '../../Layout/layoutSlicer';
+import { switchTheme } from '../../app/Reducers/layoutSlicer';
 
 const Profile = () => {
   const dispatch = useDispatch();

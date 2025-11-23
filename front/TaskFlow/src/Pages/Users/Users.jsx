@@ -2,7 +2,7 @@ import { Space, Table, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import ActionsBlock from '../../Components/Actions';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { removeUser } from './userSlicer';
+import { removeUser } from '../../app/Reducers/userSlicer';
 
 const Users = () => {
   const data = useSelector((state) => state.users);

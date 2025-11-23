@@ -14,6 +14,7 @@ const userSlice = createSlice({
       newUser.id = Date.now().toString();
       newUser.isLocked = false;
       newUser.type = 'user';
+      newUser.assignedTasks = [];
       newUser.regdate = new Date().toISOString();
       state.push(newUser);
       localStorage.setItem('users', JSON.stringify(state));

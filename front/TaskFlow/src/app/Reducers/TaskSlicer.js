@@ -1,7 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 
-const initialState = JSON.parse(localStorage.getItem('tasks')) || [];
+let savedTasks = [];
+try {
+  savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  if (!Array.isArray(savedTasks)) savedTasks = [];
+} catch {
+  savedTasks = [];
+}
+
+const initialState = savedTasks;
 
 const taskSlice = createSlice({
   name: 'tasks',
@@ -9,10 +17,10 @@ const taskSlice = createSlice({
   reducers: {
     addTask: (state, action) => {
       const newTask = action.payload;
-
       newTask.id = `${newTask.taskProject}-${state.length}`;
       newTask.createdAt = dayjs().format('DD-MM-YY-HH-mm-ss');
       newTask.type = 'task';
+      newTask.comment = [];
       newTask.changeLog = [];
       state.push(newTask);
       localStorage.setItem('tasks', JSON.stringify(state));
@@ -29,8 +37,21 @@ const taskSlice = createSlice({
       localStorage.setItem('tasks', JSON.stringify(updated));
       return updated;
     },
+    addComment: (state, action) => {
+      console.log(action.payload);
+      const updated = state.map((task) =>
+        task.id === action.payload.id
+          ? {
+              ...task,
+              comment: [...(task.comment || []), action.payload.comment],
+            }
+          : task
+      );
+      localStorage.setItem('tasks', JSON.stringify(updated));
+      return updated;
+    },
   },
 });
 
-export const { addTask, removeTask, editTask } = taskSlice.actions;
+export const { addTask, removeTask, editTask, addComment } = taskSlice.actions;
 export default taskSlice.reducer;

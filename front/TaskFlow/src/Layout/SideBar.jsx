@@ -1,4 +1,4 @@
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme, Badge } from 'antd';
 import {
   UserOutlined,
   LaptopOutlined,
@@ -30,7 +30,13 @@ const SideBar = () => {
           { key: '3', icon: <LaptopOutlined />, label: <Link to="/projects">Projects</Link> },
           {
             key: '4',
-            icon: <NotificationOutlined />,
+
+            icon: (
+              <Badge size="big" count={2}>
+                {' '}
+                <NotificationOutlined />{' '}
+              </Badge>
+            ),
             label: <Link to="/notifications">Notifications</Link>,
           },
         ]}

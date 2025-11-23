@@ -1,7 +1,7 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Flex } from 'antd';
 import { useDispatch } from 'react-redux';
-import { login, logOut } from './AuthSlicer';
+import { login, logOut } from '../../app/Reducers/AuthSlicer';
 import { useUserModal } from '../../app/hooks/useUserModal';
 
 const AuthPage = () => {

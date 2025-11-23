@@ -1,9 +1,8 @@
-import { Layout, theme } from 'antd';
+import { Layout, theme, notification } from 'antd';
 import HeaderBar from './HeaderBar';
 import MyContent from './MyContent';
 import SideBar from './SideBar';
 import { Outlet, Link } from 'react-router-dom';
-import BackButton from '../Components/BackButton';
 
 const MainLayout = () => {
   const {

@@ -1,11 +1,13 @@
 import { Form, Input, Radio, Select, Space, DatePicker, Button } from 'antd';
 import { useUserModal } from '../../app/hooks/useUserModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from './TaskSlicer';
+import { addTask } from '../../app/Reducers/TaskSlicer';
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import priorities from '../../Components/Priorities';
-import { editTask } from './TaskSlicer';
+import { editTask } from '../../app/Reducers/TaskSlicer';
+import { useNotify } from '../Notiifcations/NotificationsPopUp';
+import { addNotification } from '../../app/Reducers/NotificationsSlicer';
 
 const layout = {
   labelCol: { span: 8 },
@@ -24,13 +26,15 @@ const validateMessages = {
 
 const TaskForm = ({ form, isEdit = false, task = {}, onSuccess }) => {
   const user = useSelector((state) => state.auth.authUser);
+  const notify = useNotify();
 
   const { TextArea } = Input;
-  const taskBeforeChange = task;
+  const taskBeforeChange = JSON.parse(JSON.stringify(task));
   const { close } = useUserModal();
   const disp = useDispatch();
   const onFinish = (values) => {
-    console.log('Form submitted') 
+    const addressee = [values.assignee, ...values.allowedWatchers];
+    const current_date =         dayjs().format('DD-MM-YY-HH-mm-ss')     
 
     if (isEdit) {
       values.deadline = dayjs(values.deadline).format('YYYY-MM-DD');
@@ -41,28 +45,55 @@ const TaskForm = ({ form, isEdit = false, task = {}, onSuccess }) => {
 
       function changelog() {
         const log = [];
+        const skipKeys = ['changeLog', 'lastUpdate', 'createdAt', 'id', 'type'];
+        const isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+        const alreadyLogged = (key, currentValue) =>
+          (updateTask.changeLog || []).some(
+            (entry) =>
+              entry['Value: '] &&
+              entry['Value: '][key] !== undefined &&
+              JSON.stringify(entry['Current: ']) === JSON.stringify(currentValue)
+          );
 
-    for (const key in taskBeforeChange) {
-  if (taskBeforeChange[key] !== updateTask[key]) {
-    const when = dayjs().format('DD-MM-YY-HH-mm-ss');
-    const change = {
-      'Value: ': { [key]: updateTask[key] },
-      'Was: ': taskBeforeChange[key],
-      'Current: ': updateTask[key],
-      'Edited by: ': { user },
-      'Edited at: ': when,
-    };
-    log.push(change);
-  }
-}
-        console.log('Кінцевий лог: ', log);
-if (log.length > 0) {
-  updateTask.changeLog = [...(updateTask.changeLog || []), ...log];
-}      }
-            changelog();
+        for (const key in taskBeforeChange) {
+          if (
+            !skipKeys.includes(key) &&
+            !isEqual(taskBeforeChange[key], updateTask[key]) &&
+            !alreadyLogged(key, updateTask[key])
+          ) {
+            const when = dayjs().format('DD-MM-YY-HH-mm-ss');
+            const change = {
+              'Value: ': { [key]: updateTask[key] },
+              'Was: ': taskBeforeChange[key],
+              'Current: ': updateTask[key],
+              'Edited by: ': { user },
+              'Edited at: ': when,
+            };
+          }
+        }
+        if (log.length > 0) {
+          updateTask.changeLog = [...(updateTask.changeLog || []), ...log];
+        }
+      }
+      changelog();
 
       disp(editTask(updateTask));
       onSuccess?.(updateTask);
+      notify({
+        type: 'success',
+        message: 'Task assigned',
+        description: 'You have a new task',
+        to: addressee,
+      });
+      disp(
+        addNotification({
+          type: 'Edit task',
+          entityId: values.taskSummary,
+          to: addressee,
+          by: user,
+          createdAt: current_date 
+        })
+      );
     } else {
       values.deadline = dayjs(values.deadline).format('YYYY-MM-DD');
       values.taskAtatus = 'New';
@@ -70,6 +101,21 @@ if (log.length > 0) {
       disp(addTask(values));
       form.resetFields();
       close();
+
+      notify({
+        type: 'success',
+        message: 'Task assigned',
+        description: 'You have a new task',
+        to: addressee,
+      });
+      disp(
+        addNotification({
+          type: 'Createrd task',
+          entityId: values.taskSummary,
+          to: addressee,
+          by: user, 
+        createdAt: current_date     })
+      );
     }
   };
 
@@ -200,12 +246,13 @@ if (log.length > 0) {
       <Form.Item name="deadline" label="Deadline">
         <DatePicker />
       </Form.Item>
-      {isEdit &&
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Save
-        </Button>
-      </Form.Item> }
+      {isEdit && (
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Save
+          </Button>
+        </Form.Item>
+      )}
     </Form>
   );
 };

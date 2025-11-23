@@ -3,7 +3,7 @@ import { Flex, Button, Switch, Form, Descriptions, Input, Select, Tag } from 'an
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editProject } from './ProjectSlicer';
+import { editProject } from '../../app/Reducers/ProjectSlicer';
 
 const ProjectDashboard = () => {
   const location = useLocation();
@@ -76,7 +76,7 @@ const ProjectDashboard = () => {
       {
         key: '6',
         label: 'Allowed groups and users',
-       children:
+        children:
           Array.isArray(project.group) && project.group.length > 0 ? (
             <>
               {project.group.map((group, index) => (
@@ -94,12 +94,10 @@ const ProjectDashboard = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    console.log(values);
     const updatedproject = {
       ...project,
       ...values,
     };
-        console.log(updatedproject);
 
     dispatch(editProject(updatedproject));
     setProject(updatedproject);

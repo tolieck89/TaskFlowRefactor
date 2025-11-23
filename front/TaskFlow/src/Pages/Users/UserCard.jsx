@@ -13,7 +13,7 @@ import {
   InputNumber,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { editUser } from './userSlicer';
+import { editUser } from '../../app/Reducers/userSlicer';
 import { useLocation } from 'react-router-dom';
 import BackButton from '../../Components/BackButton';
 

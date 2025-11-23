@@ -12,6 +12,7 @@ import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
 } from '@ant-design/icons';
+import Filters from './Filters';
 
 const MyContent = ({ children }) => {
   const {
@@ -40,6 +41,7 @@ const MyContent = ({ children }) => {
         minHeight: 280,
       }}
     >
+      <Filters />
       {children}
     </Content>
   );

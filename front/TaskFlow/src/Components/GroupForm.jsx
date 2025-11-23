@@ -1,7 +1,7 @@
 import { Form, Input, InputNumber, Radio, Select } from 'antd';
 import { useUserModal } from '../app/hooks/useUserModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addGroup } from '../Pages/Settings/groupsSlicer';
+import { addGroup } from '../app/Reducers/groupsSlicer';
 
 const layout = {
   labelCol: { span: 8 },

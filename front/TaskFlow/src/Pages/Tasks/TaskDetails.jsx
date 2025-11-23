@@ -1,19 +1,9 @@
 import BackButton from '../../Components/BackButton';
-import {
-  Flex,
-  Form,
-  Descriptions,
-  Select,
-  Badge,
-  Switch,
-  Input,
-  Button,
-  DatePicker,
-  Tag,
-} from 'antd';
+import { Flex, Form, Descriptions, Switch, Input, Button, Tag } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { editTask, addComment } from '../../app/Reducers/TaskSlicer';
 import TaskForm from './TaskForm';
 import dayjs from 'dayjs';
 
@@ -22,6 +12,11 @@ const TaskDetails = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [task, setTask] = useState(location.state?.item || {});
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+  const { TextArea } = Input;
 
   useEffect(() => {
     if (task) {
@@ -44,6 +39,37 @@ const TaskDetails = () => {
   const boxStyle = {
     marginBottom: 24,
     width: '100%',
+  };
+
+  const renderChangeLog = (log) => {
+    return log.map((entry, index) => (
+      <div key={index}>
+        {Object.entries(entry).map(([key, value], i) => (
+          <div key={i}>
+            <strong>{key}</strong>: {JSON.stringify(value)}
+          </div>
+        ))}
+      </div>
+    ));
+  };
+  const currentUser = useSelector((state) => state.auth.authUser);
+  const dispatch = useDispatch();
+
+  const onFinish = (values) => {
+    let comment = {};
+    comment.text = values.taskComment;
+    comment.sendAt = dayjs().format('DD-MM-YY-HH-mm-ss');
+    comment.sendBy = currentUser;
+    const id = task.id;
+
+    console.log(comment);
+
+    const updateTask = {
+      id,
+      comment,
+    };
+    dispatch(addComment(updateTask));
+    form.resetFields();
   };
 
   const items = (task) => {
@@ -98,6 +124,11 @@ const TaskDetails = () => {
         children: task.assignee,
       },
       {
+        key: '12',
+        label: 'Commentas',
+        children: JSON.stringify(task.comment),
+      },
+      {
         key: '10',
         label: 'Allowed watchers',
         children:
@@ -118,9 +149,10 @@ const TaskDetails = () => {
           Array.isArray(changeLog) && changeLog.length > 0 ? (
             <>
               {changeLog.map((entry, index) => (
+                // console.log(entry, index),
 
-
-<Tag key={index}>{JSON.stringify(entry)}</Tag>              ))}
+                <Tag key={index}>{renderChangeLog(changeLog)}</Tag>
+              ))}
             </>
           ) : (
             '-'
@@ -148,7 +180,30 @@ const TaskDetails = () => {
       <h2>{task.id}</h2>
 
       {!editMode ? (
-        <Descriptions title="Task info" layout="vertical" bordered items={items(task)} />
+        <>
+          <Descriptions title="Task info" layout="vertical" bordered items={items(task)} />
+
+          <Form
+            {...layout}
+            name="nest-messages"
+            onFinish={onFinish}
+            style={{ maxWidth: 600 }}
+            form={form}
+          >
+            <Form.Item
+              name="taskComment"
+              label="Leave the comment"
+              tooltip="Say 'Hello' to my little friend!"
+            >
+              <TextArea />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type="primary" htmlType="submit">
+                Send
+              </Button>
+            </Form.Item>
+          </Form>
+        </>
       ) : (
         <>
           <TaskForm
@@ -162,14 +217,8 @@ const TaskDetails = () => {
             }}
           />
           <Descriptions layout="vertical" bordered>
-            <Descriptions.Item label="Created at">
-              {new Date(task.createdAt).toLocaleString()}
-            </Descriptions.Item>
-            <Descriptions.Item label="Edited at">
-              {new Date(task.editedAt).toLocaleString()}
-            </Descriptions.Item>
-            <Descriptions.Item label="Allowed watchers"></Descriptions.Item>
-       
+            <Descriptions.Item label="Created at">{task.createdAt}</Descriptions.Item>
+            <Descriptions.Item label="Edited at">{task.editedAt}</Descriptions.Item>
           </Descriptions>
         </>
       )}

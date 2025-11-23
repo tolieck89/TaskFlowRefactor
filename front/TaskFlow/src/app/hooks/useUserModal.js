@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { openModal, closeModal, changeMode } from '../../Components/modalSlicer';
+import { openModal, closeModal, changeMode } from '../Reducers/modalSlicer';
 
 export function useUserModal() {
   const dispatch = useDispatch();
@@ -14,7 +14,6 @@ export function useUserModal() {
     title,
     user,
     open: (mode = 'create', title = 'New user', user = {}) => {
-      console.log('Hello from useUserModal при відкритті модалки', user);
       dispatch(openModal({ mode, title, user }));
     },
     close: () => dispatch(closeModal()),
